@@ -4,31 +4,22 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  // 대충 서버에서 가져온 실제 데이터
+  let post = '강남 우동 맛집';
+  // JSX문법 2 - 변수 넣을 땐 {중괄호}
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      {/* JSX문법 1 - class 넣을 때는 className */}
+      <div className="black-nav">
+        <h4 style={ {fontSize : '30px', color: 'blue'}} >블로그입니다.</h4>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <h4>{ post }</h4>
+    </div>
+
+    // JSX문법 3 - Style넣을 땐 style={ { 스타일명 : '값' } }
+    // *주의* 자바스크립트기 때문에, 스타일을 줄 때 뺄셈기호를 사용하지 않음.
   )
 }
 
