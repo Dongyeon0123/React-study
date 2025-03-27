@@ -8,9 +8,7 @@ function App() {
   // 대충 서버에서 가져온 실제 데이터
   let post = '강남 우동 맛집';
   // JSX문법 2 - 변수 넣을 땐 {중괄호}
-  let [글제목1, b] = useState('남자 코트 추천');
-  let [글제목2, e] = useState('강남 우동 맛집');
-  let [글제목3, f] = useState('자바스크립트 독학');
+  let [글제목, b] = useState(['남자 코트 추천', '강남 우동 맛집', '자바스크립트 독학']);
   let logo = 'ReactBlog';
   // 자료랑 비슷한 state 사용 법
   // 1. import {useState}
@@ -29,6 +27,14 @@ function App() {
   // State의 경우에는 자동으로 html이 재 렌더링됨.
   // 바뀌는 데이터는 state를 사용하는것이 좋음
   // 무조건 State를 쓰기에는, 바뀌지 않는 데이터는 그냥 변수가 좋을듯
+
+  let [좋아요, 좋아요변경] = useState(0);
+
+  function 함수() {
+
+  }
+  
+
   return (
     <div className="App">
       {/* JSX문법 1 - class 넣을 때는 className */}
@@ -36,16 +42,18 @@ function App() {
         <h4>{logo}</h4>
       </div>
 
+      <button onClick={() => b(['여자 코트 추천', ...글제목.slice(1)])}>버튼</button>
+
       <div className="list">
-        <h4>{ 글제목1 }</h4>
+        <h4>{ 글제목[0] } <span onClick={() => {좋아요변경(prev => prev + 1)}}>👍</span>  { 좋아요 } </h4>
         <p>3월 26일 발행</p>
       </div>
       <div className="list">
-        <h4>{ 글제목2 }</h4>
+        <h4>{ 글제목[1] }</h4>
         <p>3월 26일 발행</p>
       </div>
       <div className="list">
-        <h4>{ 글제목3 }</h4>
+        <h4>{ 글제목[2] }</h4>
         <p>3월 26일 발행</p>
       </div>
     </div>
