@@ -88,7 +88,7 @@ function App() {
       {/* <Modal></Modal> */}
       {
         // 조건식 ? 참일 때 코드 : 거짓일 때 코드 - html안에서는 if 대용으로 사용.
-        // modal % 2 == 1 ? <Modal/> : null
+        // modal % 2 == 1 ? <Modal/> : null.
         modal == true ? <Modal/> : null
       }
       {/* 동적인 UI 만드는 step */}
