@@ -28,12 +28,17 @@ function App() {
   // 바뀌는 데이터는 state를 사용하는것이 좋음
   // 무조건 State를 쓰기에는, 바뀌지 않는 데이터는 그냥 변수가 좋을듯
 
-  let [좋아요, 좋아요변경] = useState(0);
-
+  let [좋아요, 좋아요변경] = useState([0, 0, 0]);
   // let [modal, setModal] = useState(0);
   let [modal, setModal] = useState(false);
   // setModal은 오른쪽에 state 변경 함수는 set ~ 로 작명하는게 약간 관습느낌.
   // 형식은 자유 ex) 0, 1 / false, true / '닫힘', '열림'
+
+  [1,2,3].map(function() {
+    // 1. array 자료 개수만큼 함수안의 코드 반복
+    // 2. 함수 안의 파라미터는 array안에 있던 자료임
+    // 3. return에 뭐 적으면 array에 담아줌.(array 자료 개수만큼)
+  })
 
   return (
     <div className="App">
@@ -68,7 +73,7 @@ function App() {
           글제목변경(copy);
         }}>가나다순정렬</button>
 
-      <div className="list">
+      {/* <div className="list">
         <h4>{ 글제목[0] } <span onClick={() => {
           좋아요변경(좋아요 + 1)
           }}>👍</span>  { 좋아요 } </h4>
@@ -84,7 +89,25 @@ function App() {
           setModal(!modal)
         }}>{ 글제목[2] }</h4>
         <p>3월 26일 발행</p>
-      </div>
+      </div> */}
+
+      {
+        글제목.map(function (a, i) {
+          return (
+            <div className="list">
+              <h4>{ 글제목[i] }
+                <span onClick={() => {
+                  let copy = [...좋아요];
+                  copy[i] = copy[i] + 1;
+                  좋아요변경(copy);
+                  }}>👍</span>
+                { 좋아요[i] }</h4>
+              <p>3월 26일 발행</p>
+            </div>
+          )
+        })
+      }
+
       {/* <Modal></Modal> */}
       {
         // 조건식 ? 참일 때 코드 : 거짓일 때 코드 - html안에서는 if 대용으로 사용.
