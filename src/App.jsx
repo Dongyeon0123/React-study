@@ -33,6 +33,7 @@ function App() {
   let [modal, setModal] = useState(false);
   // setModal은 오른쪽에 state 변경 함수는 set ~ 로 작명하는게 약간 관습느낌.
   // 형식은 자유 ex) 0, 1 / false, true / '닫힘', '열림'
+  let [title, setTitle] = useState(0);
 
   [1,2,3].map(function() {
     // 1. array 자료 개수만큼 함수안의 코드 반복
@@ -95,7 +96,9 @@ function App() {
         글제목.map(function (a, i) {
           return (
             <div className="list">
-              <h4>{ 글제목[i] }
+              <h4 onClick={() => {
+                setModal(!modal); setTitle(i)
+              }}>{ 글제목[i] }
                 <span onClick={() => {
                   let copy = [...좋아요];
                   copy[i] = copy[i] + 1;
@@ -112,7 +115,7 @@ function App() {
       {
         // 조건식 ? 참일 때 코드 : 거짓일 때 코드 - html안에서는 if 대용으로 사용.
         // modal % 2 == 1 ? <Modal/> : null.
-        modal == true ? <Modal/> : null
+        modal == true ? <Modal title={title} 글제목={글제목} 글제목변경={글제목변경}/> : null
       }
       {/* 동적인 UI 만드는 step */}
       {/* 1. html, css 미리 디자인 만들기,
@@ -126,13 +129,27 @@ function App() {
 }
 // 컴포넌트 만들 때,
 // Modal () => {} 이렇게 만들어도 됨.
-function Modal() {
+function Modal(props) {
   return (
     <div className="modal">
-      <h4>제목</h4>
+      <h4>{props.글제목[props.title]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <button onClick={() => {
+        let copy =[...props.글제목];
+        copy[0] = "여자 코트 추천";
+        props.글제목변경(copy);
+      }
+      }>글 수정</button>
     </div>
+    // 이 함수에서 글제목 state를 사용하려고 하면
+    // 함수가 정의되지 않았다는 에러가 뜨게 됨.
+    // 이를 해결하기 위해 부모 컴포넌트의 state를 자식이 받아와야하는데,
+    // 이를 props 문법이라고 함.
+    // 부모 -> 자식 state 전송하는 법
+    // 1. <자식컴포넌트 작명={state이름}>
+    // 2. props 파라미터 등록 후 props.작명 사용
+    // 참고@@ props는 부모에서 자식으로만 전송이 가능 @@
   )
   // 1. component 작명할 땐 영어대문자로 보통 작명함.
   // 2. return () 안엔 html 태그들이 평행하게 여러개 들어갈 수 없음.
