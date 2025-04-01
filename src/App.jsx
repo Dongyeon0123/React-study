@@ -35,6 +35,15 @@ function App() {
   // 형식은 자유 ex) 0, 1 / false, true / '닫힘', '열림'
   let [title, setTitle] = useState(0);
 
+  let [입력값, 입력값변경] = useState('');
+
+  let addItem = () => {
+    if (입력값.trim() !== "") {
+      글제목변경([...글제목, 입력값]); // 입력값 추가
+      입력값변경(""); // 입력 필드 초기화
+    }
+  }
+
   [1,2,3].map(function() {
     // 1. array 자료 개수만큼 함수안의 코드 반복
     // 2. 함수 안의 파라미터는 array안에 있던 자료임
@@ -95,21 +104,41 @@ function App() {
       {
         글제목.map(function (a, i) {
           return (
-            <div className="list">
+            <div className="list" key={i}>
               <h4 onClick={() => {
                 setModal(!modal); setTitle(i)
               }}>{ 글제목[i] }
-                <span onClick={() => {
+                <span onClick={(e) => { e.stopPropagation() // 이벤트 버블링을 막아줌.
                   let copy = [...좋아요];
                   copy[i] = copy[i] + 1;
                   좋아요변경(copy);
                   }}>👍</span>
                 { 좋아요[i] }</h4>
               <p>3월 26일 발행</p>
+              <button onClick={() => {
+                let copy글제목 = [...글제목];
+                let copy좋아요 = [...좋아요];
+                
+                copy글제목.splice(i, 1); // i번째 글 삭제
+                copy좋아요.splice(i, 1); // i번째 좋아요도 함께 삭제
+              
+                글제목변경(copy글제목);
+                좋아요변경(copy좋아요);
+              }}>삭제</button>
             </div>
+            // 이벤트 버블링때문에, 좋아요를 눌러도 모달창이 눌리게 됨.
+            // 
           )
         })
       }
+
+      <input type="text" value={입력값} onChange={(e)=>{입력값변경(e.target.value);
+        console.log(입력값);
+      }}/>
+      <button onClick={addItem}>글 추가</button>
+      {/* 이벤트 핸들러는 매우매우 많음 */}
+      {/* onChange 옆에 있는 e는 이벤트 객체임. */}
+      {/* javascript의 e.target.value 등 */}
 
       {/* <Modal></Modal> */}
       {
